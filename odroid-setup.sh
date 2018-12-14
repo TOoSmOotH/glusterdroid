@@ -132,6 +132,15 @@ if [ -f 1stboot ]; then
     systemctl restart telegraf
     systemctl enable telegraf
   fi
+  if [ $BURST == 1 ]; then
+    echo "Installing Burst"
+    wget
+    tar zxvf scavenger-1.6.6-odroid.tar.gz
+    mkdir -p /opt
+    mv release /opt/scavenger
+    # Install screen
+    apt -y install screen
+  fi 
 
   # This should not be automated because there are a multitude of options here.
   echo "All Done. It's up to you to handle the gluster volume creation"
