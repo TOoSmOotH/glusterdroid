@@ -55,7 +55,7 @@ if [ ! -f 1stboot ]; then
   apt -y upgrade
 
   # Install some tools we need.
-  apt -y install wget parted curl
+  apt -y install wget parted curl cryptsetup
 
   # Add some Repos
   wget -O- https://download.gluster.org/pub/gluster/glusterfs/3.12/rsa.pub | apt-key add -
@@ -123,6 +123,7 @@ if [ -f 1stboot ]; then
   mkfs -t $FILESYSTEM -m 1 /dev/mapper/$CRYPTVOL
   echo " Closing the volume so we can apply the key to it for booting"
   cryptsetup -v luksClose $CRYPTVOL
+  sleep 20
   echo " Applying key to the volume. You will need that password again. Last time I promise."
   cryptsetup luksAddKey /dev/sda1 /root/keyfile
   echo "Setting up the crypttab"
@@ -160,3 +161,4 @@ if [ -f 1stboot ]; then
 
   # This should not be automated because there are a multitude of options here.
   echo "All Done. It's up to you to handle the gluster volume creation"
+fi
