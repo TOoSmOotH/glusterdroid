@@ -59,7 +59,7 @@ if [ ! -f 1stboot ]; then
 
   # Add some Repos
   wget -O- https://download.gluster.org/pub/gluster/glusterfs/3.12/rsa.pub | apt-key add -
-  add-apt-repository ppa:gluster/glusterfs-3.12
+  add-apt-repository ppa:gluster/glusterfs-4.1
   wget -O- https://repos.influxdata.com/influxdb.key | apt-key add -
   echo "deb https://repos.influxdata.com/ubuntu bionic stable" > /etc/apt/sources.list.d/influxdata.list
   apt update
