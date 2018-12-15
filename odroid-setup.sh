@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Change stuff to match in here. Add ALL your gluster nodes to the clusterhosts before you run this script
-HOSTNAME=gluster10tb06
+# Hostname of the node you are adding
+HN=gluster10tb06
+# Get your IP cause DHCP FTW
+MAINIP=$(ip route get 1 | awk '{print $7;exit}')
 # Pick a filesystem. I would choose either ext4 or xfs. It's up to you!
 FILESYSTEM=ext4
 # Name of the encrypted volume. This can be anything you want
@@ -19,7 +22,7 @@ INFLUXSERVER=http://192.168.2.4:8086
 BURST=1
 # This path is dependant on the type of volume in gluster you are creating
 if [ $GTYPE == "distributed" ]; then
-  BURSTPATH=/$MOUNTPOINT/$BRICKNAME
+  BURSTPATH=/$MOUNTPOINT/$BRICKNAME/burst
 else
   BUSTPATH=/$MOUNTPOINT/burst
 fi
@@ -27,13 +30,24 @@ fi
 # Don't mess with anything below this unless you know what you are doing.
 if [ ! -f 1stboot ]; then
   # Set the Hostname
-  hostnamectl set-hostname $HOSTNAME
+  hostnamectl set-hostname $HN
 
   # Change the hosts file
-  sed -i 's/odroid/$HOSTNAME/g' /etc/hosts
+  sed -i "s/odroid/$HN/g" /etc/hosts
 
-  # Add all the nodes to the hosts file
-  #Add Loop
+  # Add all the nodes to the local hosts file
+  cat clusterhosts | while read line
+  do
+    echo $line >> /etc/hosts
+  done
+
+  # Add the new gluster node to all the other nodes
+  # Yes this is lame
+  cat clusterhosts | grep -v $HN | awk '{print $1}' >> hostscluster
+  CMD=$(echo "$MAINIP $HN")
+  echo $CMD
+  for host in $(cat hostscluster); do ssh -o StrictHostKeyChecking=accept-new root@$host sudo echo "$CMD >> /etc/hosts"; done
+  rm hostscluster
 
   # Update the OS
   apt update
@@ -53,6 +67,8 @@ if [ ! -f 1stboot ]; then
   # Install what we came here for.
   echo "Installing Gluster Server.. This will error out sometimes but that is ok."
   apt install glusterfs-server -y
+  echo " If you got an error about gluster server don't worry about it."
+  touch 1stboot
   echo "Rebooting in 30s... Re-run this script when you log in again."
   sleep 30
   reboot
@@ -140,7 +156,7 @@ if [ -f 1stboot ]; then
     mv release /opt/scavenger
     # Install screen
     apt -y install screen
-  fi 
+  fi
 
   # This should not be automated because there are a multitude of options here.
   echo "All Done. It's up to you to handle the gluster volume creation"
