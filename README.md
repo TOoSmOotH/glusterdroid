@@ -3,10 +3,16 @@ Semi Automated Setup of GlusterFS on odroid HC2
 
 ## Disclaimer:
 
-This is probably not the most optimal of things. There are mych beter ways to
+This is probably not the most optimal of things. There are much better ways to
 do things but this project was never meant to show off any 1337 bash skillz. It was just
-an easy way for me to consistently build new cluster nodes and have them work. There
+an easy way for me to consistently build new gluster nodes and have them work. There
 are no guarantees and this is use at your won risk.
+
+
+- This has been tested on Odroid HC2 but would probably work on the 2.5" version.
+- This **does not** take care of the gluster setup as far as setting up/adding to volumes.
+That part is up to you.
+
 
 ## Installation:
 
