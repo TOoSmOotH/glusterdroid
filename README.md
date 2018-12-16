@@ -22,9 +22,9 @@ when you reboot and takes you to the encryption part.
 3. Edit clusterhosts and add all your nodes to the list. When you add new nodes it will append the new ones to existing host files on the nodes.
 4. Edit the setup script and review the variables that you need to customize.
 
-HN = The Hostname of the node you are currently building.  
-FILESYSTEM = Pick a file system. You can choose XFS or ext4. Other might work but those are the ones I tested.  
-CRYPTVOL = This is your crypt volume name. Nothing really speacial about this except that it will show up as this unde /dev/mapper.  
+*HN* = The Hostname of the node you are currently building.  
+*FILESYSTEM* = Pick a file system. You can choose XFS or ext4. Other might work but those are the ones I tested.  
+*CRYPTVOL* = This is your crypt volume name. Nothing really speacial about this except that it will show up as this unde /dev/mapper.  
 MOUNTPOINT = This is where you plan on mounting your 3.5" drive. I chose /gluster but you can change this to whatever.  
 BRICKNAME = Again this is what you plan on calling your brick. you can name it whatever you like.  
 GTYPE = Gluster Node Type. This only really matters if you plan on burst mining on free space.  
