@@ -137,11 +137,12 @@ if [ -f 1stboot ]; then
   cryptsetup --verify-passphrase luksFormat /dev/sda1 -c aes-ctr-plain -h sha256 -s 128
   echo "Opening the encrypted volume"
   cryptsetup luksOpen /dev/sda1 $CRYPTVOL
+  ls -la /dev/mapper
   echo "Creating a $FILESYSTEM filesystem on the encrypted volume $CRYPTVOL"
   mkfs -t $FILESYSTEM -m 1 /dev/mapper/$CRYPTVOL
   echo " Closing the volume so we can apply the key to it for booting"
   cryptsetup -v luksClose $CRYPTVOL
-  echo " Applying key to the volume. You will need that password again. Last time I promise."
+  echo " Applying key to the volume. You will need that password again."
   cryptsetup luksAddKey /dev/sda1 /root/keyfile
   echo "Setting up the crypttab"
   echo "$CRYPTVOL /dev/sda1 /root/keyfile luks" >> /etc/crypttab
@@ -150,7 +151,8 @@ if [ -f 1stboot ]; then
   mkdir -p $MOUNTPOINT/$BRICKNAME
   echo "Adding the mount to /etc/fstab"
   echo "/dev/mapper/$CRYPTVOL $MOUNTPOINT $FILESYSTEM default,rw  0 2" >> /etc/fstab
-  echo "Mounting the encrypted drive"
+  echo "Mounting the encrypted drive. You will need that PW one last time"
+  cryptsetup luksOpen /dev/sda1 $CRYPTVOL
   mount -a
 
   # Get Telegraf rocking if it is enabled.

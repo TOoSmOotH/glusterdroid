@@ -21,6 +21,9 @@ First things first, let's install git. You can run an update here if you like as
 It will reboot and you will have to run the setup a second time. You will notices the script knows
 when you reboot and takes you to the encryption part.
 
+**MAKE SURE YOU CLEAR ALL THE PARTITIONS ON THE 3.5" DRIVE!!
+
+
 1. Install git:
 `apt install git`
 2. Clone the repo:
@@ -41,7 +44,11 @@ when you reboot and takes you to the encryption part.
 you have to set the reward assignment to the pools address etc.
 **BURSTACCOUNT** = Set this to your account ID of the wallet you using to mine with.
 **BURSTDEADLINE** = This is where you set the deadline. Research this... It's based on how much space you have etc.
-**BURSTPATH** = This is the path. Default should work.   
+**BURSTPATH** = This is the path. Default should work.
+
+5. run setup as root
+`bash odroid-setup.sh`
+   
 
 ## Telegraf
 Telegraf is a slick way to monitor what's going on with your setup. I will include a grafana dashboard that you will have to edit for your environment. I have included a custom monitoring script for disk temps that gets dropped into cron.
