@@ -1,13 +1,11 @@
-account_id: 2163918534933052101
+account_id: ACNT
 
 plot_dirs:
-  - '/gluster/brick1/burst/poc2'
+  - 'PLOTPATH'
 
 # url: 'http://pool.dev.burst-test.net:8124'   # testnet pool
 # url: 'http://dummypool.megash.it'            # dummypool with constant scoop number for benchmarking
-url: 'http://voiplanparty.com:8124'
-
-#url: 'http://voiplanparty.com:8124'
+url: 'POOL'
 
 hdd_reader_thread_count: 0            # default 0 (=number of disks)
 hdd_use_direct_io: false               # default true
@@ -23,7 +21,7 @@ gpu_worker_thread_count: 0            # default 0 (=CPU only)
 gpu_nonces_per_cache: 262144          # default 262144
 gpu_mem_mapping: false                # default false
 
-target_deadline: 11087847           # default u32::MAX
+target_deadline: DEADLINE           # default u32::MAX
 
 get_mining_info_interval: 3000        # default 3000ms
 timeout: 5000                         # default 5000ms
