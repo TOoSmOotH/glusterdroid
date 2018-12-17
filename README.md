@@ -1,4 +1,4 @@
-# glusterdroid
+# glusterdroid v0.0.1
 Semi Automated Setup of GlusterFS on odroid HC2
 
 ## Disclaimer:
