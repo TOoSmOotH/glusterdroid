@@ -150,7 +150,7 @@ if [ -f 1stboot ]; then
   echo "Setting up the crypttab"
   echo "$CRYPTVOL /dev/sda1 /root/keyfile luks" >> /etc/crypttab
   echo "Assigning the key to cryptdisks"
-  sed -i "/CRYPTODISKS_MOUNT*/c\CRYPTDISKS_MOUNT=\"/root/keyfile\"" /etc/default/cryptdisks
+  sed -i "/CRYPTDISKS_MOUNT*/c\CRYPTDISKS_MOUNT=\"/root/keyfile\"" /etc/default/cryptdisks
   mkdir -p $MOUNTPOINT/$BRICKNAME
   echo "Adding the mount to /etc/fstab"
   echo "/dev/mapper/$CRYPTVOL $MOUNTPOINT $FILESYSTEM default,rw  0 2" >> /etc/fstab
