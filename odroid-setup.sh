@@ -113,6 +113,8 @@ if [ -f 1stboot ]; then
   done
 
   # Partition and encrypt
+  echo "Nuking all the partitions on the 3.5 incher"
+  dd if=/dev/zero of=/dev/sda  bs=512  count=1
   echo "Partitioning the drive"
   parted -a opt /dev/sda mktable gpt
   parted -a opt /dev/sda mkpart primary 0% 100%
