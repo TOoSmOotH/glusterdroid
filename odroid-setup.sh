@@ -142,8 +142,9 @@ if [ -f 1stboot ]; then
   ls -la /dev/mapper
   echo "Creating a $FILESYSTEM filesystem on the encrypted volume $CRYPTVOL"
   mkfs -t $FILESYSTEM -m 1 /dev/mapper/$CRYPTVOL
-  echo " Closing the volume so we can apply the key to it for booting"
+  echo "Closing the volume so we can apply the key to it for booting.. This will take a sec"
   cryptsetup -v luksClose $CRYPTVOL
+  sleep 30
   echo " Applying key to the volume. You will need that password again."
   cryptsetup luksAddKey /dev/sda1 /root/keyfile
   echo "Setting up the crypttab"
@@ -174,7 +175,7 @@ if [ -f 1stboot ]; then
   if [ $BURST == 1 ]; then
     echo "Installing Burst"
     wget https://github.com/TOoSmOotH/glusterdroid/releases/download/scav1.6.6/scavenger-1.6.6-odroid.tar.gz
-    tar zxvf scavenger-1.6.6-odroid.tar.gz
+    tar zxf scavenger-1.6.6-odroid.tar.gz
     mkdir -p /opt
     mv release /opt/scavenger
     cp burstconfig.yaml /opt/scavenger/config.yaml

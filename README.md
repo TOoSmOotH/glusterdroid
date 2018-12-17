@@ -48,6 +48,7 @@ you have to set the reward assignment to the pools address etc.
 
 5. run setup as root
 `bash odroid-setup.sh`
+6. You will get prompted about postgress. I personally choose no config.
 
 
 ## Telegraf
