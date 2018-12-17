@@ -184,8 +184,15 @@ if [ -f 1stboot ]; then
     # Create a junky script
     echo "cd /opt/scavenger" > /usr/sbin/scav.sh
     echo "./scavenger" >> /usr/sbin/scav.sh
+    chmod +x /usr/sbin/scav.sh
+    echo "screen -dmS scav /usr/sbin/scav.sh" > /usr/sbin/screenscav.sh
+    chmod +x /usr/sbin/screenscav.sh
+    # Add this so it starts at boot
+    cp scav.service /etc/systemd/system/
+    systemctl daemon-reload
+    systemctl enable scav.service
     # Launch scavenger in the background. You can connect by doing screen -r scav
-    screen -dmS scav /usr/sbin/scav.sh
+    systemctl start scav
   fi
 
   # This should not be automated because there are a multitude of options here.
