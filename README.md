@@ -21,7 +21,7 @@ First things first, let's install git. You can run an update here if you like as
 It will reboot and you will have to run the setup a second time. You will notices the script knows
 when you reboot and takes you to the encryption part.
 
-**MAKE SURE YOU CLEAR ALL THE PARTITIONS ON THE 3.5" DRIVE!!
+**MAKE SURE YOU CLEAR ALL THE PARTITIONS ON THE 3.5" DRIVE with FDISK!!!**
 
 
 1. Install git:
@@ -48,7 +48,7 @@ you have to set the reward assignment to the pools address etc.
 
 5. run setup as root
 `bash odroid-setup.sh`
-   
+
 
 ## Telegraf
 Telegraf is a slick way to monitor what's going on with your setup. I will include a grafana dashboard that you will have to edit for your environment. I have included a custom monitoring script for disk temps that gets dropped into cron.
