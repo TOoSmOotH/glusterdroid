@@ -25,11 +25,11 @@ GTYPE=distributed
 TELEGRAF=1
 INFLUXSERVER=http://192.168.2.4:8086
 # Do you want to mine burst on your free space? Set to 0 to disable.
-BURST=1
+BURST=0
 # Enter the Pool you want to use.
 BURSTPOOL=http://voiplanparty.com:8124
 # Don't know if you really need this but this is the account id for which you are mining.
-BURSTACCOUNT=2163918534933052101
+BURSTACCOUNT=XXXXXXXXXXXXXXXXXXXXXXX
 # This is based on total TB you are mining with. Do research on the pool and the space you have for mining.
 BURSTDEADLINE=11087847
 # This path is dependant on the type of volume in gluster you are creating
@@ -151,24 +151,26 @@ if [ -f 1stboot ]; then
   echo "$CRYPTVOL /dev/sda1 /root/keyfile luks" >> /etc/crypttab
   echo "Assigning the key to cryptdisks"
   sed -i "/CRYPTDISKS_MOUNT*/c\CRYPTDISKS_MOUNT=\"/root/keyfile\"" /etc/default/cryptdisks
-  mkdir -p $MOUNTPOINT/$BRICKNAME
-  echo "Adding the mount to /etc/fstab"
+  mkdir -p $MOUNTPOINT
+  echo "Adding the mount to /etc/fstab FIX THE TABS HERE"
   echo "/dev/mapper/$CRYPTVOL $MOUNTPOINT $FILESYSTEM default,rw  0 2" >> /etc/fstab
   echo "Mounting the encrypted drive. You will need that PW one last time"
   cryptsetup luksOpen /dev/sda1 $CRYPTVOL
   mount -a
+  mkdir -p $MOUNTPOINT/$BRICKNAME
 
   # Get Telegraf rocking if it is enabled.
   if [ $TELEGRAF == 1 ]; then
     echo "Installing Telegraf to monitor the things"
-    apt install telegraf smartmontools
+    apt -y install telegraf smartmontools
     mkdir -p /var/log/temps
+    touch /var/log/temps/hddtemps.log
     cp drivetemp.sh /usr/sbin/
     chmod 755 /usr/sbin/drivetemp.sh
     # Add the job to Cron
     echo "*/10 * * * * root /usr/sbin/drivetemp.sh" > /etc/cron.d/hddtemp
     cp telegraf.conf /etc/telegraf/
-    sed -i "s/ACIDINFLUX/$INFLUXSERVER/g" /etc/hosts
+    sed -i "s/ACIDINFLUX/$INFLUXSERVER/g" /etc/telegraf/telegraf.conf
     systemctl restart telegraf
     systemctl enable telegraf
   fi

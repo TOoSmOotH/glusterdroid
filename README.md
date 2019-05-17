@@ -3,6 +3,10 @@ Semi Automated Setup of GlusterFS on odroid HC2
 
 ## Disclaimer:
 
+** Right now there are some things broken and I don't have an extra HC2 to test **
+
+With that said, you can still follow the steps in the bash script manually. There are a couple things that don't work quite right when running it straight up.
+
 This is probably not the most optimal of things. There are much better ways to
 do things but this project was never meant to show off any 1337 bash skillz. It was just
 an easy way for me to consistently build new gluster nodes and have them work. There
